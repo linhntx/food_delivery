@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/linhntx/food_delivery/component"
 	"github.com/linhntx/food_delivery/modules/restaurant/restauranttransport/ginrestaurant"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -34,9 +35,11 @@ func runService(db *gorm.DB) error {
 
 	//CRUD
 
+	appCtx := component.NewAppContext(db)
+
 	restaurants := r.Group("/restaurants")
 	{
-		restaurants.POST("", ginrestaurant.CreateRestaurant(db))
+		restaurants.POST("", ginrestaurant.CreateRestaurant(appCtx))
 	}
 
 	return r.Run()
