@@ -2,6 +2,7 @@ package restaurantbiz
 
 import (
 	"context"
+	"errors"
 
 	"github.com/linhntx/food_delivery/modules/restaurant/restaurantmodel"
 )
@@ -24,6 +25,14 @@ func NewGetRestaurantBiz(store GetRestaurantStore) *getRestaurantBiz {
 
 func (biz *getRestaurantBiz) GetRestaurant(ctx context.Context, id int) (*restaurantmodel.Restaurant, error) {
 	data, err := biz.store.FindDataByCondition(ctx, map[string]interface{}{"id": id})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if data.Status == 0 {
+		return nil, errors.New("data delete")
+	}
 
 	return data, err
 }
