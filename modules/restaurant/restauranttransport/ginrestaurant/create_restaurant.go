@@ -1,7 +1,6 @@
 package ginrestaurant
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -15,7 +14,6 @@ func CreateRestaurant(appCtx component.AppContext) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		var data restaurantmodel.RestaurantCreate
-		fmt.Println("DB main", &data)
 		if err := c.ShouldBind(&data); err != nil {
 			c.JSON(401, gin.H{
 				"error": err.Error(),

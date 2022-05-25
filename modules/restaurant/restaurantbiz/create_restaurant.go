@@ -3,7 +3,6 @@ package restaurantbiz
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/linhntx/food_delivery/modules/restaurant/restaurantmodel"
 )
@@ -21,7 +20,6 @@ func NewCreateRestaurantBiz(store CreateRestaurantStore) *createRestaurantBiz {
 }
 
 func (biz *createRestaurantBiz) CreateRestaurant(ctx context.Context, data *restaurantmodel.RestaurantCreate) error {
-	fmt.Println("data", data)
 	if data.Name == "" {
 		return errors.New("restaurant name can not be blank")
 	}

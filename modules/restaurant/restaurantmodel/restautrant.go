@@ -1,7 +1,9 @@
 package restaurantmodel
 
+import "github.com/linhntx/food_delivery/common"
+
 type Restaurant struct {
-	Id   int    `json:"id" gorm:"column:id;"`
+	common.SQLModel `json:",inline"`
 	Name string `json:"name" gorm:"column:name;"`
 	Addr string `json:"address" gorm:"column:addr;"`
 }
