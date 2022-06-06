@@ -2,8 +2,8 @@ package restaurantbiz
 
 import (
 	"context"
-	"errors"
 
+	"github.com/linhntx/food_delivery/common"
 	"github.com/linhntx/food_delivery/modules/restaurant/restaurantmodel"
 )
 
@@ -14,8 +14,8 @@ type DeleteRestaurantStore interface {
 		moreKeys ...string,
 	) (*restaurantmodel.Restaurant, error)
 	SoftDeleteData(
-		ctx 	context.Context,
-		id 		int,
+		ctx context.Context,
+		id int,
 	) error
 }
 
@@ -32,15 +32,15 @@ func (biz *deleteRestaurantBiz) DeleteRestaurant(ctx context.Context, id int) er
 	oldData, err := biz.store.FindDataByCondition(ctx, map[string]interface{}{"id": id})
 
 	if err != nil {
-		return err
+		return common.ErrCannotGetEntity(restaurantmodel.EntityName, err)
 	}
 
 	if oldData.Status == 0 {
-		return errors.New("data deleted")
+		return common.ErrEntityDeleted(restaurantmodel.EntityName, nil)
 	}
 
 	if err := biz.store.SoftDeleteData(ctx, id); err != nil {
-		return err
+		return common.ErrCannotDeleteEntity(restaurantmodel.EntityName, err)
 	}
 
 	return nil

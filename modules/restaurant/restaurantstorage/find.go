@@ -3,6 +3,7 @@ package restaurantstorage
 import (
 	"context"
 
+	"github.com/linhntx/food_delivery/common"
 	"github.com/linhntx/food_delivery/modules/restaurant/restaurantmodel"
 )
 
@@ -20,7 +21,7 @@ func (s *sqlStore) FindDataByCondition(
 	}
 
 	if err := db.Where(conditions).First(&result).Error; err != nil {
-		return nil, err
+		return nil, common.ErrDB(err)
 	}
 
 	return &result, nil
